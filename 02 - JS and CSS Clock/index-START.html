@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>JS + CSS Clock</title>
 </head>
+
 <body>
 
 
-    <div class="clock">
-      <div class="clock-face">
-        <div class="hand hour-hand"></div>
-        <div class="hand min-hand"></div>
-        <div class="hand second-hand"></div>
-      </div>
+  <div class="clock">
+    <div class="clock-face">
+      <div class="hand hour-hand"></div>
+      <div class="hand min-hand"></div>
+      <div class="hand second-hand"></div>
     </div>
+  </div>
 
 
   <style>
@@ -43,17 +45,18 @@
       position: relative;
       padding: 2rem;
       box-shadow:
-        0 0 0 4px rgba(0,0,0,0.1),
+        0 0 0 4px rgba(0, 0, 0, 0.1),
         inset 0 0 0 3px #EFEFEF,
         inset 0 0 10px black,
-        0 0 10px rgba(0,0,0,0.2);
+        0 0 10px rgba(0, 0, 0, 0.2);
     }
 
     .clock-face {
       position: relative;
       width: 100%;
       height: 100%;
-      transform: translateY(-3px); /* account for the height of the clock hands */
+      transform: translateY(-3px);
+      /* account for the height of the clock hands */
     }
 
     .hand {
@@ -62,13 +65,50 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: 100%;
+    } 
+
+    .second-hand {
+      height: 3px;
     }
+
+    .hour-hand {
+    }
+
 
   </style>
 
   <script>
 
+    let hours, min, sec;
+    const hands = document.querySelectorAll(`.hand`);
+
+      setInterval(() => { // Main event
+        // Update numerical hour variables
+        const d = new Date();
+        hours = d.getHours();
+        d.getHours() > 12 ? hours = d.getHours() - 12 : hours = d.getHours(); // 12 Hours format
+        min = d.getMinutes();
+        sec = d.getSeconds();
+        let hoursDegrees = hours * 30 + 90; // + 90 to start at 0 on the cadran
+        let minDegrees = min * 6 + 90;
+        let secDegrees = sec * 6 + 90;
+        console.log(sec);
+
+        // Update UI
+        hands[0].setAttribute(`style`, `transform: rotate(${hoursDegrees}deg) scale(0.7, 1.0);`);
+        hands[1].setAttribute(`style`, `transform: rotate(${minDegrees}deg)`);
+        hands[2].setAttribute(`style`, `transform: rotate(${secDegrees}deg)`);
+
+      }, 1000);
+
+
+
+
+    hands[0].style
+
 
   </script>
 </body>
+
 </html>
